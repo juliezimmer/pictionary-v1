@@ -1,25 +1,31 @@
 import React from 'react';
 
 class SearchBar extends React.Component{
-   
-   // runs when user enters text in the search bar.
-   // runs with event autpomatically passed to it.
-   onInputChange (event) {
-      console.log(event.target.value);
+   //initialize a state object
+   state = {
+      term: ''
+   };
+
+   onFormSubmit = event => {
+      event.preventDefault(); // this prevents the browser from trying to automatically submit the form and refresh the page.
+      
+      this.props.onSubmit(this.state.term);
    }
    
-     render() {
+   render() {
       return ( 
          <div className="ui segment">
-            <form className="ui form">
+            <form className="ui form"
+               onSubmit={this.onFormSubmit} >
                <div className="field">
                   <label>Image Search</label>
                   <input type="text" 
-                     onChange={this.onInputChange} />
+                     value={this.state.term}
+                     onChange={(e) => this.setState({term: e.target.value})} />
                </div>
            </form>
          </div>
-      );
+      ) ;
    }
 }
 
